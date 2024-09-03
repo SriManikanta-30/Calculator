@@ -1,66 +1,67 @@
-const apiKey = "255821d81118cf10e6a03a1af643fd74"; // Replace with your actual API key
+let boxes = document.querySelectorAll(".box");
+let resetBtn = document.querySelector("#reset-btn");
+let newGameBtn = document.querySelector("#new-btn");
+let msgContainer = document.querySelector(".msg-container");
+let msg = document.querySelector("#msg");
+let turnO = true;
 
-document.querySelector("button").addEventListener("click", () => {
-  const city = document.querySelector("input").value;
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+const winPatterns = [
+  [0, 1, 2],
+  [0, 3, 6],
+  [0, 4, 8],
+  [1, 4, 7],
+  [2, 5, 8],
+  [2, 4, 6],
+  [3, 4, 5],
+  [6, 7, 8],
+];
 
-  fetch(apiUrl)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("City not found");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Display the weather details container
-      document.getElementById("weather-details").style.display = "block";
+const resetGame = () => {
+  turnO = true;
+  enableBoxes();
+  msgContainer.classList.add("hide");
+};
 
-      // Update city name, temperature, humidity, and wind speed
-      document.querySelector(".city").textContent = data.name;
-      document.querySelector(".temp").textContent = `${Math.round(
-        data.main.temp
-      )}°c`;
-      document.querySelector(
-        ".humidity"
-      ).textContent = `${data.main.humidity}%`;
-      document.querySelector(".wind").textContent = `${data.wind.speed} Km/h`;
-
-      // Update weather icon based on weather conditions
-      const weather = data.weather[0].main.toLowerCase();
-      let weatherIcon = "sun.png"; // Default icon
-
-      switch (weather) {
-        case "clouds":
-          weatherIcon = "cloudy.png"; // Cloudy weather
-          break;
-        case "rain":
-        case "drizzle":
-          weatherIcon = "rain.png"; // Rainy weather
-          break;
-        case "snow":
-          weatherIcon = "snow.png"; // Snowy weather
-          break;
-        case "thunderstorm":
-          weatherIcon = "cloudy (1).png"; // Thunderstorm
-          break;
-        case "clear":
-          weatherIcon = "sun.png"; // Clear weather
-          break;
-        case "mist":
-        case "fog":
-          weatherIcon = "windy.png"; // Mist or fog
-          break;
-        default:
-          weatherIcon = "sun.png"; // Default to sunny
-      }
-
-      // Set the weather icon image
-      document.querySelector(".weather-icon").src = `pictures/${weatherIcon}`;
-    })
-    .catch((error) => {
-      console.error("Error fetching weather data:", error);
-      alert("City not found! Please enter a valid city name.");
-      // Hide the weather details on error
-      document.getElementById("weather-details").style.display = "none";
-    });
+boxes.forEach((box) => {
+  box.addEventListener("click", () => {
+    if (box.innerText === "") {
+      box.innerText = turnO ? "O" : "X";
+      turnO = !turnO;
+      box.disabled = true;
+      checkWinner();
+    }
+  });
 });
+
+const disableBoxes = () => {
+  boxes.forEach((box) => (box.disabled = true));
+};
+
+const enableBoxes = () => {
+  boxes.forEach((box) => {
+    box.disabled = false;
+    box.innerText = "";
+  });
+};
+
+const showWinner = (winner) => {
+  msg.innerText = `Congratulations, Winner is ${winner}!`;
+  msgContainer.classList.remove("hide");
+  disableBoxes();
+};
+
+const checkWinner = () => {
+  winPatterns.forEach((pattern) => {
+    let [a, b, c] = pattern;
+    if (
+      boxes[a].innerText !== "" &&
+      boxes[a].innerText === boxes[b].innerText &&
+      boxes[a].innerText === boxes[c].innerText
+    ) {
+      showWinner(boxes[a].innerText);
+    }
+  });
+};
+
+newGameBtn.addEventListener("click", resetGame);
+resetBtn.addEventListener("click", resetGame);

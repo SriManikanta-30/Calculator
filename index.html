@@ -3,40 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weather App</title>
+    <title>Updated Tic Tac Toe</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="card">
-      <div class="search">
-        <input type="text" placeholder="Enter city name" spellcheck="false" />
-        <button>
-          <img src="pictures/search-interface-symbol.png" />
-        </button>
-      </div>
-      <!-- Weather details initially hidden -->
-      <div class="weather" id="weather-details" style="display: none">
-        <img src="pictures/sun.png" class="weather-icon" />
-        <h1 class="temp">22°c</h1>
-        <h2 class="city">Mandapeta</h2>
-        <div class="details">
-          <div class="col">
-            <img src="pictures/humidity.png" />
-            <div>
-              <p class="humidity">50%</p>
-              <p>Humidity</p>
-            </div>
-          </div>
-          <div class="col">
-            <img src="pictures/windy.png" />
-            <div>
-              <p class="wind">15 Km/h</p>
-              <p>Wind Speed</p>
-            </div>
-          </div>
+    <div class="msg-container hide">
+      <p id="msg">Winner</p>
+      <button id="new-btn">New Game</button>
+    </div>
+    <main>
+      <h1>Tic Tac Toe</h1>
+      <div class="container">
+        <div class="game">
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
+          <button class="box"></button>
         </div>
       </div>
-    </div>
+      <button id="reset-btn">Reset Game</button>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>
