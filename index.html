@@ -3,31 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Updated Tic Tac Toe</title>
+    <title>Rock, Paper, Scissors Game</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="msg-container hide">
-      <p id="msg">Winner</p>
-      <button id="new-btn">New Game</button>
-    </div>
-    <main>
-      <h1>Tic Tac Toe</h1>
-      <div class="container">
-        <div class="game">
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
-          <button class="box"></button>
+    <div class="container">
+      <h1>Rock, Paper, Scissors</h1>
+      <div class="game">
+        <div class="choices">
+          <button onclick="play('rock')">
+            <img src="images/stone.png" alt="Rock" />
+          </button>
+          <button onclick="play('paper')">
+            <img src="images/paper.png" alt="Paper" />
+          </button>
+          <button onclick="play('scissors')">
+            <img src="images/scissors.png" alt="Scissors" />
+          </button>
+        </div>
+        <div class="result">
+          <p id="result-text">Make your move!</p>
+          <p id="score">Score: Player 0 - 0 Computer</p>
         </div>
       </div>
-      <button id="reset-btn">Reset Game</button>
-    </main>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>
